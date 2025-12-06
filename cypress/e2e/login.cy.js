@@ -1,5 +1,5 @@
 describe('WiseAdmit Login Tests', () => {
-  // Use environment variables instead of hardcoded credentials
+
   const VALID_EMAIL = Cypress.env('TEST_EMAIL');
   const VALID_PASSWORD = Cypress.env('TEST_PASSWORD');
 
@@ -14,7 +14,7 @@ describe('WiseAdmit Login Tests', () => {
     // Set viewport
     cy.viewport(1920, 1080);
     
-    // Navigate to login page (baseUrl is configured in cypress.config.js)
+    // Navigate to login page 
     cy.visit('/');
     
     // Handle any uncaught exceptions
