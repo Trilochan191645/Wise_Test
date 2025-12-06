@@ -10,6 +10,12 @@ class HomePage {
   clickLogin() {
     return cy.contains('button', 'Login').should('be.visible').click();
   }
+
+   clickLoginAsStudent() {
+    return cy.contains('[role="menuitem"]', 'Login as a Student')
+      .should('be.visible')
+      .click();
+  }
 }
 
 export default new HomePage();
