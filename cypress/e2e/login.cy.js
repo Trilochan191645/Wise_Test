@@ -1,14 +1,21 @@
 describe('WiseAdmit Login Tests', () => {
-  const BASE_URL = 'https://www.wiseadmit.io/';
-  const VALID_EMAIL = 't.kafle191645@gmail.com';
-  const VALID_PASSWORD = '2000@Nishan';
+  // Use environment variables instead of hardcoded credentials
+  const VALID_EMAIL = Cypress.env('TEST_EMAIL');
+  const VALID_PASSWORD = Cypress.env('TEST_PASSWORD');
+
+  // Validate that credentials are provided
+  before(() => {
+    if (!VALID_EMAIL || !VALID_PASSWORD) {
+      throw new Error('TEST_EMAIL and TEST_PASSWORD environment variables must be set');
+    }
+  });
 
   beforeEach(() => {
     // Set viewport
     cy.viewport(1920, 1080);
     
-    // Navigate to login page
-    cy.visit(BASE_URL);
+    // Navigate to login page (baseUrl is configured in cypress.config.js)
+    cy.visit('/');
     
     // Handle any uncaught exceptions
     cy.on('uncaught:exception', (err, runnable) => {
@@ -24,15 +31,14 @@ describe('WiseAdmit Login Tests', () => {
 
   it('should successfully login with valid credentials', () => {
     // Enter email
-   cy.get('input[type="text"]')
-      //.click()
+    cy.get('input[type="text"]')
       .type(VALID_EMAIL);
     
     // Click first login button
     cy.contains('button', 'Log in').should('be.visible').click();
     
     // Wait for password field and enter password
-   cy.get('input[name="password"]', { timeout: 10000 })
+    cy.get('input[name="password"]', { timeout: 10000 })
       .should('be.visible')
       .clear()
       .type(VALID_PASSWORD);
@@ -66,7 +72,7 @@ describe('WiseAdmit Login Tests', () => {
 
   it('should fail login with valid email and incorrect password', () => {
     // Enter valid email
-     cy.get('input[type="text"]')
+    cy.get('input[type="text"]')
       .first()
       .should('be.visible')
       .clear()
@@ -100,7 +106,7 @@ describe('WiseAdmit Login Tests', () => {
 
     invalidEmails.forEach((email) => {
       // Enter invalid email
-       cy.get('input[type="text"]')
+      cy.get('input[type="text"]')
         .first()
         .should('be.visible')
         .clear()
@@ -114,7 +120,7 @@ describe('WiseAdmit Login Tests', () => {
         .should('be.visible');
       
       // Clear the field for next iteration
-       cy.get('input[type="text"]')
+      cy.get('input[type="text"]')
         .first()
         .clear();
     });
@@ -122,7 +128,7 @@ describe('WiseAdmit Login Tests', () => {
 
   it('should validate empty password field', () => {
     // Enter valid email
-     cy.get('input[type="text"]')
+    cy.get('input[type="text"]')
       .should('be.visible')
       .clear()
       .type(VALID_EMAIL);
