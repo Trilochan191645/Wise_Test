@@ -146,4 +146,4 @@ describe('WiseAdmit Login Tests', () => {
     cy.clearCookies();
     cy.clearLocalStorage();
   });
-});
+});  
